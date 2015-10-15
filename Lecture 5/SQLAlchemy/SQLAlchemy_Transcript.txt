@@ -1,0 +1,410 @@
+Python 3.4.0 (v3.4.0:04f714765c13, Mar 16 2014, 19:24:06) [MSC v.1600 32 bit (In
+tel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sqlalchemy import create_engine
+>>> engine = create_engine('sqlite://:memory:', echo=True)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Python34\lib\site-packages\sqlalchemy\engine\__init__.py", line 386,
+in create_engine
+    return strategy.create(*args, **kwargs)
+  File "C:\Python34\lib\site-packages\sqlalchemy\engine\strategies.py", line 49,
+ in create
+    u = url.make_url(name_or_url)
+  File "C:\Python34\lib\site-packages\sqlalchemy\engine\url.py", line 186, in ma
+ke_url
+    return _parse_rfc1738_args(name_or_url)
+  File "C:\Python34\lib\site-packages\sqlalchemy\engine\url.py", line 232, in _p
+arse_rfc1738_args
+    return URL(name, **components)
+  File "C:\Python34\lib\site-packages\sqlalchemy\engine\url.py", line 60, in __i
+nit__
+    self.port = int(port)
+ValueError: invalid literal for int() with base 10: 'memory:'
+>>> engine = create_engine('sqlite:///:memory:', echo=True)
+>>> from sqlalchemy.ext.declarative import declarative_base
+>>> Base = declarative_base()
+>>> from sqlalchemy import Column, Integer, String
+>>> class User(Base):
+...     __tablename__ = 'users'
+...     id = Column(Integer, primary_key=True)
+...     name = Column(String)
+...     fullname = Column(String)
+...     password = Column(String)
+...     def __repr__(self):
+...         return "<User(name='%s', fullname='%s', password='%s')>" % (self.nam
+e, self.fullname, self.password)
+...
+>>> from sqlalchemy import create_engine
+>>> engine = create_engine('sqlite:///:memory:', echo=True)
+>>> 
+>>> from sqlalchemy.ext.declarative import declarative_base
+>>> 
+>>> Base = declarative_base()
+>>> Base = declarative_base()
+>>> 
+>>> from sqlalchemy import Column, Integer, String
+>>> class User(Base):
+...     __tablename__ = 'users'
+...     id = Column(Integer, primary_key=True)
+...     name = Column(String)
+...     fullname = Column(String)
+...     password = Column(String)
+...     def __repr__(self):
+...         return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
+... 
+>>> 
+>>> User.__table__
+Table('users', MetaData(bind=None), Column('id', Integer(), table=<users>, prima
+ry_key=True, nullable=False), Column('name', String(), table=<users>), Column('f
+ullname', String(), table=<users>), Column('password', String(), table=<users>),
+ schema=None)
+>>> Base.metadata.create_all(engine)
+2015-10-13 11:26:23,634 INFO sqlalchemy.engine.base.Engine SELECT CAST('test pla
+in returns' AS VARCHAR(60)) AS anon_1
+2015-10-13 11:26:23,635 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:26:23,637 INFO sqlalchemy.engine.base.Engine SELECT CAST('test uni
+code returns' AS VARCHAR(60)) AS anon_1
+2015-10-13 11:26:23,637 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:26:23,641 INFO sqlalchemy.engine.base.Engine PRAGMA table_info("us
+ers")
+2015-10-13 11:26:23,641 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:26:23,644 INFO sqlalchemy.engine.base.Engine
+CREATE TABLE users (
+        id INTEGER NOT NULL,
+        name VARCHAR,
+        fullname VARCHAR,
+        password VARCHAR,
+        PRIMARY KEY (id)
+)
+
+
+2015-10-13 11:26:23,647 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:26:23,651 INFO sqlalchemy.engine.base.Engine COMMIT
+>>> dir(Base)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__form
+at__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__',
+ '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__
+repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref_
+_', '_decl_class_registry', 'metadata']
+>>> Base.metadata.create_all.__doc__
+"Create all tables stored in this metadata.\n\n        Conditional by default, w
+ill not attempt to recreate tables already\n        present in the target databa
+se.\n\n        :param bind:\n          A :class:`.Connectable` used to access th
+e\n          database; if None, uses the existing bind on this ``MetaData``, if\
+n          any.\n\n        :param tables:\n          Optional list of ``Table``
+objects, which is a subset of the total\n          tables in the ``MetaData`` (o
+thers are ignored).\n\n        :param checkfirst:\n          Defaults to True, d
+on't issue CREATEs for tables already present\n          in the target database.
+\n\n        "
+Python 3.4.0 (v3.4.0:04f714765c13, Mar 16 2014, 19:24:06) [MSC v.1600 32 bit (In
+tel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> def add(x,y):
+...     'this function adds x and y to return sum of x + y'
+...     return x+y
+...
+>>> add(3,4)
+7
+>>> print(add.__doc__)
+this function adds x and y to return sum of x + y
+...     password = Column(String)
+...     def __repr__(self):
+...         return "<User(name='%s', fullname='%s', password='%s')>" % (self.nam
+e, self.fullname, self.password)
+...
+>>> User
+<class '__main__.User'>
+>>> dir(User)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__form
+at__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__',
+ '__lt__', '__mapper__', '__module__', '__ne__', '__new__', '__reduce__', '__red
+uce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__
+', '__table__', '__tablename__', '__weakref__', '_decl_class_registry', '_sa_cla
+ss_manager', 'fullname', 'id', 'metadata', 'name', 'password']
+>>> User.metadata
+MetaData(bind=None)
+>>> User.__doc__
+>>> Base.metadata.create_all(engine)
+2015-10-13 11:45:42,683 INFO sqlalchemy.engine.base.Engine SELECT CAST('test pla
+in returns' AS VARCHAR(60)) AS anon_1
+2015-10-13 11:45:42,684 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:45:42,686 INFO sqlalchemy.engine.base.Engine SELECT CAST('test uni
+code returns' AS VARCHAR(60)) AS anon_1
+2015-10-13 11:45:42,687 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:45:42,694 INFO sqlalchemy.engine.base.Engine PRAGMA table_info("us
+ers")
+2015-10-13 11:45:42,695 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:45:42,699 INFO sqlalchemy.engine.base.Engine
+CREATE TABLE users (
+        id INTEGER NOT NULL,
+        name VARCHAR,
+        fullname VARCHAR,
+        password VARCHAR,
+        PRIMARY KEY (id)
+)
+
+
+2015-10-13 11:45:42,702 INFO sqlalchemy.engine.base.Engine ()
+2015-10-13 11:45:42,704 INFO sqlalchemy.engine.base.Engine COMMIT
+>>> User.metadata
+MetaData(bind=None)
+>>> User.metadata.__table__
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'MetaData' object has no attribute '__table__'
+>>> dir(User.metadata)
+['__class__', '__contains__', '__delattr__', '__dict__', '__dir__', '__doc__', '
+__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '
+__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '_
+_reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeo
+f__', '__str__', '__subclasshook__', '__visit_name__', '__weakref__', '_add_tabl
+e', '_bind', '_bind_to', '_compiler_dispatch', '_execute_on_connection', '_fk_me
+mos', '_init_items', '_remove_table', '_schema_item_copy', '_schemas', '_sequenc
+es', '_set_parent', '_set_parent_with_dispatch', 'append_ddl_listener', 'bind',
+'clear', 'create_all', 'dispatch', 'drop_all', 'get_children', 'info', 'is_bound
+', 'naming_convention', 'quote', 'reflect', 'remove', 'schema', 'sorted_tables',
+ 'tables']
+>>> User.metadata.schema
+>>> ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
+>>> ed_user
+<User(name='ed', fullname='Ed Jones', password='edspassword')>
+>>> from sqlalchemy.orm import sessionmaker
+>>> Session = sessionmaker(bind=engine
+...
+... )
+>>> session = Session()
+>>> session.add(ed_user)
+>>> our_user = session.query(User).filter_by(name='ed').first()
+2015-10-13 11:49:26,308 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
+2015-10-13 11:49:26,313 INFO sqlalchemy.engine.base.Engine INSERT INTO users (na
+me, fullname, password) VALUES (?, ?, ?)
+2015-10-13 11:49:26,314 INFO sqlalchemy.engine.base.Engine ('ed', 'Ed Jones', 'e
+dspassword')
+2015-10-13 11:49:26,321 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+ LIMIT ? OFFSET ?
+2015-10-13 11:49:26,324 INFO sqlalchemy.engine.base.Engine ('ed', 1, 0)
+>>> our_user
+<User(name='ed', fullname='Ed Jones', password='edspassword')>
+>>> our_user is ed_user
+True
+>>> session.add_all([
+...     User(name='wendy', fullname='Wendy Williams', password='foobar'),
+...     User(name='mary', fullname='Mary Contrary', password='xxg527'),
+...     User(name='fred', fullname='Fred Flinstone', password='blah')])
+>>> ed_user.password = 'f8s7ccs'
+>>> session.query(User)
+<sqlalchemy.orm.query.Query object at 0x03415EF0>
+>>> session.query(User).first()
+2015-10-13 11:52:24,751 INFO sqlalchemy.engine.base.Engine UPDATE users SET pass
+word=? WHERE users.id = ?
+2015-10-13 11:52:24,753 INFO sqlalchemy.engine.base.Engine ('f8s7ccs', 1)
+2015-10-13 11:52:24,755 INFO sqlalchemy.engine.base.Engine INSERT INTO users (na
+me, fullname, password) VALUES (?, ?, ?)
+2015-10-13 11:52:24,757 INFO sqlalchemy.engine.base.Engine ('wendy', 'Wendy Will
+iams', 'foobar')
+2015-10-13 11:52:24,759 INFO sqlalchemy.engine.base.Engine INSERT INTO users (na
+me, fullname, password) VALUES (?, ?, ?)
+2015-10-13 11:52:24,760 INFO sqlalchemy.engine.base.Engine ('mary', 'Mary Contra
+ry', 'xxg527')
+2015-10-13 11:52:24,763 INFO sqlalchemy.engine.base.Engine INSERT INTO users (na
+me, fullname, password) VALUES (?, ?, ?)
+2015-10-13 11:52:24,764 INFO sqlalchemy.engine.base.Engine ('fred', 'Fred Flinst
+one', 'blah')
+2015-10-13 11:52:24,769 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+ LIMIT ? OFFSET ?
+2015-10-13 11:52:24,773 INFO sqlalchemy.engine.base.Engine (1, 0)
+<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>
+>>> session.query(User).filter_by(name="mary").first
+<bound method Query.first of <sqlalchemy.orm.query.Query object at 0x03415130>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> session.query(User).filter_by(name="mary").first()
+2015-10-13 11:54:14,153 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+ LIMIT ? OFFSET ?
+2015-10-13 11:54:14,155 INFO sqlalchemy.engine.base.Engine ('mary', 1, 0)
+<User(name='mary', fullname='Mary Contrary', password='xxg527')>
+>>> dir(session.query(User).filter_by(name="mary"))
+['_Query__all_equivs', '__class__', '__clause_element__', '__delattr__', '__dict
+__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__',
+ '__getitem__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__lt__'
+, '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__',
+'__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_ada
+pt_all_clauses', '_adapt_clause', '_adapt_col_list', '_adapt_polymorphic_element
+', '_adjust_for_single_inheritance', '_attributes', '_autoflush', '_bind_mapper'
+, '_clone', '_compile_context', '_compound_eager_statement', '_conditional_optio
+ns', '_connection_from_session', '_correlate', '_criterion', '_current_path', '_
+distinct', '_enable_assertions', '_enable_eagerloads', '_enable_single_crit', '_
+entities', '_entity_zero', '_execute_and_instances', '_execution_options', '_fil
+ter_aliases', '_for_update_arg', '_from_obj', '_from_obj_alias', '_from_selectab
+le', '_get_condition', '_get_existing_condition', '_get_impl', '_get_options', '
+_group_by', '_having', '_invoke_all_eagers', '_join', '_join_entities', '_join_l
+eft_to_right', '_join_to_left', '_joinpath', '_joinpoint', '_joinpoint_zero', '_
+limit', '_mapper_adapter_map', '_mapper_entities', '_mapper_loads_polymorphicall
+y_with', '_mapper_zero', '_no_clauseelement_condition', '_no_criterion_assertion
+', '_no_criterion_condition', '_no_limit_offset', '_no_statement_condition', '_n
+o_yield_per', '_offset', '_only_entity_zero', '_only_full_mapper_zero', '_only_l
+oad_props', '_only_mapper_zero', '_options', '_order_by', '_orm_only_adapt', '_o
+rm_only_from_obj_alias', '_params', '_polymorphic_adapters', '_populate_existing
+', '_prefixes', '_prepare_right_side', '_primary_entity', '_refresh_state', '_re
+set_joinpoint', '_reset_polymorphic_adapter', '_select_args', '_select_from_enti
+ty', '_set_enable_single_crit', '_set_entities', '_set_entity_selectables', '_se
+t_select_from', '_should_log_debug', '_should_log_info', '_should_nest_selectabl
+e', '_simple_statement', '_statement', '_suffixes', '_update_joinpoint', '_value
+s', '_version_check', '_with_current_path', '_with_hints', '_with_invoke_all_eag
+ers', '_with_labels', '_with_options', '_yield_per', 'add_column', 'add_columns'
+, 'add_entity', 'all', 'as_scalar', 'autoflush', 'column_descriptions', 'correla
+te', 'count', 'cte', 'delete', 'dispatch', 'distinct', 'enable_assertions', 'ena
+ble_eagerloads', 'except_', 'except_all', 'execution_options', 'exists', 'filter
+', 'filter_by', 'first', 'from_self', 'from_statement', 'get', 'group_by', 'havi
+ng', 'instances', 'intersect', 'intersect_all', 'join', 'label', 'limit', 'logge
+r', 'merge_result', 'offset', 'one', 'options', 'order_by', 'outerjoin', 'params
+', 'populate_existing', 'prefix_with', 'reset_joinpoint', 'scalar', 'select_enti
+ty_from', 'select_from', 'selectable', 'session', 'slice', 'statement', 'subquer
+y', 'suffix_with', 'union', 'union_all', 'update', 'value', 'values', 'whereclau
+se', 'with_entities', 'with_for_update', 'with_hint', 'with_labels', 'with_lockm
+ode', 'with_parent', 'with_polymorphic', 'with_session', 'with_statement_hint',
+'with_transformation', 'yield_per']
+>>> session.query(User).filter_by(name="mary").all()
+2015-10-13 11:55:49,442 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+2015-10-13 11:55:49,442 INFO sqlalchemy.engine.base.Engine ('mary',)
+[<User(name='mary', fullname='Mary Contrary', password='xxg527')>]
+>>> session.query(User).filter_by().all()
+2015-10-13 11:56:07,503 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+2015-10-13 11:56:07,505 INFO sqlalchemy.engine.base.Engine ()
+[<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>, <User(name='wendy',
+ fullname='Wendy Williams', password='foobar')>, <User(name='mary', fullname='Ma
+ry Contrary', password='xxg527')>, <User(name='fred', fullname='Fred Flinstone',
+ password='blah')>]
+>>> session.new
+IdentitySet([])
+>>> len(session.new)
+0
+>>> session.dirty
+IdentitySet([])
+>>> session.commit()
+2015-10-13 11:57:07,822 INFO sqlalchemy.engine.base.Engine COMMIT
+>>> ed_user.name
+2015-10-13 11:57:18,879 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
+2015-10-13 11:57:18,882 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.id = ?
+2015-10-13 11:57:18,883 INFO sqlalchemy.engine.base.Engine (1,)
+'ed'
+>>> ed_user.name = "edward"
+>>> ed_user
+<User(name='edward', fullname='Ed Jones', password='f8s7ccs')>
+>>> fake_user = User(name='fakeuser', fullname='Invalid', password='12345')
+>>> session.add(fake_user)
+>>> session.query(User).filter_by(name="fakeuser").all()
+2015-10-13 11:58:14,707 INFO sqlalchemy.engine.base.Engine UPDATE users SET name
+=? WHERE users.id = ?
+2015-10-13 11:58:14,708 INFO sqlalchemy.engine.base.Engine ('edward', 1)
+2015-10-13 11:58:14,709 INFO sqlalchemy.engine.base.Engine INSERT INTO users (na
+me, fullname, password) VALUES (?, ?, ?)
+2015-10-13 11:58:14,710 INFO sqlalchemy.engine.base.Engine ('fakeuser', 'Invalid
+', '12345')
+2015-10-13 11:58:14,713 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+2015-10-13 11:58:14,715 INFO sqlalchemy.engine.base.Engine ('fakeuser',)
+[<User(name='fakeuser', fullname='Invalid', password='12345')>]
+>>> session.query(User).filter_by(name="edward").all()
+2015-10-13 11:58:36,128 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+2015-10-13 11:58:36,132 INFO sqlalchemy.engine.base.Engine ('edward',)
+[<User(name='edward', fullname='Ed Jones', password='f8s7ccs')>]
+>>> session.rollback()
+2015-10-13 12:07:18,118 INFO sqlalchemy.engine.base.Engine ROLLBACK
+>>> session.query(User).filter_by(name="edward").all()
+2015-10-13 12:07:28,542 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
+2015-10-13 12:07:28,545 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+2015-10-13 12:07:28,546 INFO sqlalchemy.engine.base.Engine ('edward',)
+[]
+>>> session.query(User).filter_by(name="fakeuser").all()
+2015-10-13 12:07:40,129 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users
+WHERE users.name = ?
+2015-10-13 12:07:40,131 INFO sqlalchemy.engine.base.Engine ('fakeuser',)
+[]
+>>> for instance in session.query(User).order_by(User.id):
+...     print (instance.name, instance.fullname)
+...
+2015-10-13 12:08:20,090 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users ORDER BY users.id
+2015-10-13 12:08:20,091 INFO sqlalchemy.engine.base.Engine ()
+ed Ed Jones
+wendy Wendy Williams
+mary Mary Contrary
+fred Fred Flinstone
+>>> for instance in session.query(User).order_by(User.id):
+...     print(instance)
+...
+2015-10-13 12:08:47,104 INFO sqlalchemy.engine.base.Engine SELECT users.id AS us
+ers_id, users.name AS users_name, users.fullname AS users_fullname, users.passwo
+rd AS users_password
+FROM users ORDER BY users.id
+2015-10-13 12:08:47,105 INFO sqlalchemy.engine.base.Engine ()
+<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>
+<User(name='wendy', fullname='Wendy Williams', password='foobar')>
+<User(name='mary', fullname='Mary Contrary', password='xxg527')>
+<User(name='fred', fullname='Fred Flinstone', password='blah')>
+>>> for name, fullname in session.query(User.name, User.fullname):
+...     print (name, fullname)
+...
+2015-10-13 12:09:47,344 INFO sqlalchemy.engine.base.Engine SELECT users.name AS
+users_name, users.fullname AS users_fullname
+FROM users
+2015-10-13 12:09:47,345 INFO sqlalchemy.engine.base.Engine ()
+ed Ed Jones
+wendy Wendy Williams
+mary Mary Contrary
+fred Fred Flinstone
+>>> for fullname in session.query(User.fullname):
+...     print(fullname)
+...
+2015-10-13 12:10:56,418 INFO sqlalchemy.engine.base.Engine SELECT users.fullname
+ AS users_fullname
+FROM users
+2015-10-13 12:10:56,420 INFO sqlalchemy.engine.base.Engine ()
+('Ed Jones',)
+('Wendy Williams',)
+('Mary Contrary',)
+('Fred Flinstone',)
+>>>
