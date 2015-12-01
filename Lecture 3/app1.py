@@ -15,7 +15,7 @@ def todo_list(status=-1):
     return output
 
 @get('/new')
-def new_item_request    ():  
+def new_item_request():  
         return '''
         <p> Enter a new Item </p> <br/>
         <form action="/new" method="post">
@@ -40,3 +40,5 @@ def new_item():
         return todo_list(1)
 
 run()
+
+
